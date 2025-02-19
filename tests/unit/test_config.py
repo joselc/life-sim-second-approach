@@ -32,7 +32,7 @@ def test_display_config_immutability() -> None:
 def test_colors_initialization() -> None:
     """Test that Colors is initialized with valid RGB values."""
     colors = Colors()
-    
+
     def is_valid_rgb(color: Tuple[int, int, int]) -> bool:
         """Check if a color tuple contains valid RGB values."""
         return (
@@ -40,7 +40,7 @@ def test_colors_initialization() -> None:
             and all(isinstance(value, int) for value in color)
             and all(0 <= value <= 255 for value in color)
         )
-    
+
     assert is_valid_rgb(colors.BLACK)
     assert is_valid_rgb(colors.WHITE)
     assert is_valid_rgb(colors.BACKGROUND)
@@ -76,4 +76,4 @@ def test_simulation_config_immutability() -> None:
     with pytest.raises(dataclasses.FrozenInstanceError):
         config.INITIAL_GRID_SIZE = (10, 10)  # type: ignore
     with pytest.raises(dataclasses.FrozenInstanceError):
-        config.TIME_STEP = 0.5  # type: ignore 
+        config.TIME_STEP = 0.5  # type: ignore

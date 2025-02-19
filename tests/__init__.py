@@ -1,1 +1,1 @@
-"""Test suite for the HexLife simulation engine.""" 
+"""Test suite for the HexLife simulation engine."""

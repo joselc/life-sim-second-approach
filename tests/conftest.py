@@ -29,10 +29,10 @@ def simulation_config() -> SimulationConfig:
 def cleanup_pygame() -> Generator[None, None, None]:
     """Ensure pygame is properly cleaned up after each test."""
     import pygame
-    
+
     yield
-    
+
     try:
         pygame.quit()
     except Exception:
-        pass  # Ignore any pygame cleanup errors 
+        pass  # Ignore any pygame cleanup errors
