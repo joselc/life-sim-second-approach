@@ -1,0 +1,159 @@
+---
+description: Python best practices
+globs: *.py
+---
+# Python Development Best Practices Rules
+
+## Code Style
+ALWAYS follow PEP 8 guidelines for code formatting.
+NEVER exceed 88 characters per line (Black formatter standard).
+ALWAYS use meaningful variable and function names that describe their purpose.
+NEVER use single-letter variable names except for loop counters or mathematical formulas.
+ALWAYS use snake_case for functions and variables.
+ALWAYS use PascalCase for class names.
+NEVER use mixedCase.
+
+## Type Hints
+ALWAYS use type hints for function parameters and return values.
+ALWAYS use Optional[] for parameters that can be None.
+NEVER use Any type unless absolutely necessary.
+ALWAYS define custom types using TypeVar or Protocol for complex types.
+
+## Functions and Methods
+ALWAYS follow the Single Responsibility Principle.
+NEVER write functions longer than 50 lines.
+ALWAYS use keyword arguments for functions with more than 2 parameters.
+NEVER use mutable default arguments.
+ALWAYS write docstrings for public functions using Google style.
+NEVER modify function parameters in-place unless explicitly documented.
+
+## Classes
+ALWAYS use dataclasses for data containers.
+NEVER use public attributes unless there's a specific reason.
+ALWAYS implement __str__ and __repr__ methods for custom classes.
+ALWAYS use @property decorator instead of getter/setter methods.
+NEVER use multiple inheritance unless dealing with mix-ins.
+
+## Error Handling
+ALWAYS use specific exception types instead of catching Exception.
+NEVER catch exceptions without handling them properly.
+ALWAYS include error messages that are helpful for debugging.
+NEVER use bare except clauses.
+ALWAYS clean up resources using context managers (with statements).
+
+## Dependencies
+ALWAYS specify exact versions in requirements.txt or pyproject.toml.
+NEVER import packages using *.
+ALWAYS organize imports in three groups: standard library, third-party, local.
+NEVER use global variables for configuration.
+
+## Testing
+ALWAYS write unit tests for new code.
+ALWAYS use pytest as the testing framework.
+NEVER skip tests without proper documentation explaining why.
+ALWAYS mock external dependencies in tests.
+ALWAYS aim for at least 80% test coverage.
+NEVER rely on test order.
+
+## Async Programming
+ALWAYS use async/await for I/O-bound operations.
+NEVER mix async and sync code in the same function.
+ALWAYS use aiohttp instead of requests for HTTP calls in async code.
+NEVER use asyncio.sleep() for production delays.
+
+## Performance
+ALWAYS use generators for large datasets.
+NEVER load entire files into memory unless necessary.
+ALWAYS use list comprehensions instead of map() or filter().
+NEVER use '+' for string concatenation in loops.
+ALWAYS use collections for specialized data structures.
+
+## Security
+NEVER store secrets in code.
+ALWAYS use environment variables for configuration.
+NEVER trust user input without validation.
+ALWAYS use parameterized queries for database operations.
+NEVER disable SSL verification in production code.
+
+## Documentation
+ALWAYS write clear docstrings for modules, classes, and functions.
+NEVER leave TODO comments without a corresponding issue/ticket.
+ALWAYS include examples in docstrings for complex functions.
+ALWAYS maintain a README.md with setup and usage instructions.
+
+## Standard Libraries and Common Operations
+ALWAYS use the logging module for any form of logging.
+NEVER use print() statements for logging or debugging in production code.
+ALWAYS configure logging with proper log levels, formatters, and handlers.
+NEVER write custom implementations for operations that exist in standard libraries.
+
+ALWAYS use:
+- pathlib for file path operations, NEVER os.path
+- datetime for date/time operations, NEVER string operations for dates
+- decimal.Decimal for financial calculations, NEVER float
+- collections.defaultdict for dictionaries with default values
+- json module for JSON operations, NEVER manual string formatting
+- csv module for CSV operations, NEVER manual file parsing
+- re module for regular expressions, NEVER string.replace() for complex patterns
+- argparse for command-line arguments, NEVER manual sys.argv parsing
+- urllib.parse for URL parsing, NEVER string splitting
+- contextlib for context managers, NEVER manual resource management
+- queue module for thread-safe queues, NEVER custom implementations
+- tempfile for temporary files, NEVER manual file creation/cleanup
+- hashlib for hashing, NEVER custom hash implementations
+- secrets for security-sensitive operations, NEVER random module for security
+- unittest.mock or pytest.mock for testing, NEVER custom mock objects
+- configparser for config files, NEVER manual file parsing
+- xml.etree.ElementTree for XML, NEVER string manipulation
+- sqlite3 for local databases, NEVER custom file-based storage
+- math module for mathematical operations, NEVER custom implementations
+- statistics module for statistical calculations
+- functools for function operations (caching, partial, etc.)
+- itertools for iteration patterns
+- concurrent.futures for parallel execution
+- typing module for all type hints
+
+## Data Processing
+ALWAYS use:
+- pandas for data manipulation and analysis
+- numpy for numerical operations
+- pydantic for data validation and settings management
+- marshmallow for object serialization/deserialization
+- SQLAlchemy for database operations
+- requests for HTTP operations (or aiohttp for async)
+
+## File Operations
+ALWAYS use:
+- pathlib.Path for file paths and operations
+- shutil for file copying and removal
+- fileinput for line-by-line file processing
+- zipfile for ZIP archive operations
+- tarfile for TAR archive operations
+- pickle only for internal data (NEVER for untrusted data)
+
+## Environment and Configuration
+ALWAYS use:
+- python-dotenv for environment variables
+- pydantic BaseSettings for configuration
+- appdirs for application directories
+- platformdirs for platform-specific directories
+
+## Text Processing
+ALWAYS use:
+- string.Template for simple string templating
+- jinja2 for complex templating
+- textwrap for text wrapping
+- difflib for comparing sequences
+- unicodedata for Unicode operations
+
+## Testing and Quality Assurance
+ALWAYS use:
+- pytest for testing
+- coverage.py for code coverage
+- black for code formatting
+- isort for import sorting
+- flake8 for code linting
+- mypy for static type checking
+- bandit for security checks
+- pylint for code analysis
+

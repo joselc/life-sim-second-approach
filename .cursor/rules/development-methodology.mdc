@@ -1,0 +1,70 @@
+---
+description: Development methodology
+globs: 
+---
+# Feature Development Process Guidelines
+
+## Initial Analysis
+ALWAYS break down the feature into small, testable increments before starting.
+NEVER try to implement all functionality at once.
+ALWAYS identify the core functionality first, then additional capabilities.
+NEVER skip the feature breakdown step.
+
+## Development Iterations
+ALWAYS follow this sequence for each increment:
+1. Write/Update Acceptance Tests
+2. Implement Minimum Code
+3. Refactor if needed
+4. Move to next increment
+
+NEVER move to the next increment until current tests pass.
+NEVER implement functionality without corresponding tests.
+
+## Acceptance Test Development
+ALWAYS write acceptance tests before implementing features.
+ALWAYS follow this process for test development:
+1. Define the expected behavior in plain language
+2. Identify input scenarios and expected outputs
+3. Write the test using Given-When-Then format
+4. Ensure test fails initially (red phase)
+
+NEVER write tests that depend on implementation details.
+ALWAYS make tests readable and maintainable.
+
+## Implementation Phase
+ALWAYS implement the minimum code needed to pass tests.
+NEVER add functionality not covered by tests.
+ALWAYS commit after each passing increment.
+NEVER leave failing tests uncommitted.
+
+## Refactoring Phase
+ALWAYS review code for potential refactoring after tests pass.
+NEVER break existing tests during refactoring.
+ALWAYS run full test suite after refactoring.
+NEVER skip refactoring if code improvements are identified.
+
+## Documentation
+ALWAYS document the purpose of each test.
+ALWAYS update API documentation if endpoints change.
+NEVER leave test scenarios undocumented.
+ALWAYS include examples in documentation.
+
+## Progress Tracking
+ALWAYS report which increment is being worked on.
+ALWAYS indicate test status (passed/failed).
+ALWAYS list remaining increments.
+NEVER leave progress status ambiguous.
+
+## Communication
+ALWAYS provide clear status updates after each increment.
+ALWAYS highlight any blockers or issues found.
+NEVER proceed with unclear requirements.
+ALWAYS ask for clarification when needed.
+
+## Quality Checks
+ALWAYS ensure each increment:
+- Has proper test coverage
+- Follows clean architecture principles
+- Adheres to Python best practices
+- Is properly documented
+- Has clear commit messages

@@ -1,0 +1,59 @@
+---
+description: Clean architectures principles
+globs: 
+---
+# Clean Architecture Implementation Rules
+
+## Layer Separation
+ALWAYS organize code into distinct layers:
+- Entities (Domain layer)
+- Use Cases (Application layer)
+- Interface Adapters (Presentation/Infrastructure layer)
+- Frameworks and Drivers (External layer)
+
+NEVER allow outer layers to import from or reference inner layers directly.
+ALWAYS ensure dependencies point inward, toward the core domain.
+
+## Domain Layer Rules
+ALWAYS keep domain entities pure and free of framework dependencies.
+NEVER include database, UI, or external service logic in domain entities.
+ALWAYS define domain interfaces (abstract base classes or protocols) in the domain layer.
+NEVER import from external packages in domain entities except for primitive types.
+
+## Use Case Layer Rules
+ALWAYS implement one use case per class/function.
+ALWAYS make use cases independent of UI and infrastructure concerns.
+NEVER directly instantiate external services within use cases.
+ALWAYS inject dependencies through interfaces defined in the domain layer.
+ALWAYS handle business logic orchestration in use cases, not in entities or controllers.
+
+## Interface Adapters Rules
+ALWAYS create separate models for different layers (DTOs, ViewModels, etc.).
+NEVER pass domain entities directly to the presentation layer.
+ALWAYS implement repository interfaces defined in the domain layer.
+NEVER leak database or framework-specific details to inner layers.
+ALWAYS handle data transformation between layers in adapters.
+
+## Frameworks and Drivers Rules
+ALWAYS treat frameworks and libraries as plugins to the system.
+NEVER allow framework-specific code to leak into inner layers.
+ALWAYS implement framework-specific code at the outermost layer.
+NEVER directly couple business logic to external frameworks.
+
+## Dependency Management
+ALWAYS use dependency injection for external services and repositories.
+NEVER use service locators or global state.
+ALWAYS define abstract interfaces before implementations.
+NEVER create circular dependencies between layers.
+
+## Package Structure
+ALWAYS organize packages/modules to reflect the layered architecture.
+NEVER place code from different layers in the same package/module.
+ALWAYS maintain separate build configurations for each layer.
+NEVER allow cross-layer imports that violate the dependency rule.
+
+## Testing
+ALWAYS make core business rules testable without external dependencies.
+NEVER require a database or external service to test domain logic.
+ALWAYS create separate test suites for each architectural layer.
+NEVER mock entities within the same layer.
