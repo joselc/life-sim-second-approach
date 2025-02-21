@@ -52,10 +52,8 @@ class HexToPixelTransformer:
         self.origin_y = origin_y
         
         # Precalculate constants for flat-topped hexagons
-        self.width = hex_size * 2
-        self.height = hex_size * sqrt(3)
-        self.h_spacing = self.width * 3/4  # Horizontal spacing between hexes
-        self.v_spacing = self.height       # Vertical spacing between hexes
+        self.width = hex_size * 2  # Distance between parallel sides
+        self.height = hex_size * sqrt(3)  # Distance between vertices
     
     def hex_to_pixel(self, hex_pos: GridPosition) -> PixelPosition:
         """Convert hex coordinates to pixel coordinates.
@@ -66,11 +64,11 @@ class HexToPixelTransformer:
         Returns:
             PixelPosition: The corresponding pixel coordinates
         """
-        # For flat-topped hexagons:
-        # x = size * (3/2 * q)
-        # y = size * (√3 * (r + q/2))
-        x = self.origin_x + (self.h_spacing * hex_pos.q)
-        y = self.origin_y + (self.v_spacing * (hex_pos.r + hex_pos.q/2))
+        # For flat-topped hexagons in rectangular layout:
+        # x = origin_x + size * (3/2 * q + (r % 2))  # Use 3/2 for proper horizontal spacing
+        # y = origin_y + size * sqrt(3)/2 * r        # Keep current vertical spacing
+        x = self.origin_x + self.hex_size * (3 * hex_pos.q + (hex_pos.r % 2) * 1.5)
+        y = self.origin_y + self.hex_size * (sqrt(3)/2) * hex_pos.r
         return PixelPosition(x=x, y=y)
     
     def get_hex_vertices(self, center: PixelPosition) -> list[Tuple[float, float]]:

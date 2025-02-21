@@ -1,60 +1,79 @@
 """Main entry point for the HexLife simulation."""
 import sys
-from typing import NoReturn
-
 import pygame
 
-from src.config import colors, display
+from src.config import display, colors
+from src.domain.entities.grid import HexGrid
+from src.domain.value_objects.grid_dimensions import GridDimensions
+from src.interfaces.pygame_adapter.rendering.grid_display import GridDisplay, DisplayConfig
 
 
 class GameLoop:
-    """Main game loop handler following clean architecture principles."""
+    """Main game loop class that handles the simulation lifecycle."""
 
-    def __init__(self) -> None:
-        """Initialize pygame and create the main window."""
+    def __init__(self):
+        """Initialize the game loop and Pygame."""
         pygame.init()
-        self.screen = pygame.display.set_mode(display.WINDOW_SIZE)
+        self.screen = pygame.display.set_mode(display.WINDOW_SIZE, pygame.RESIZABLE)
         pygame.display.set_caption(display.WINDOW_TITLE)
         self.clock = pygame.time.Clock()
-        self.running = False
+        self.running = True
 
-    def handle_events(self) -> None:
+        # Initialize grid and display components
+        dimensions = GridDimensions(display.GRID_WIDTH, display.GRID_HEIGHT)
+        self.grid = HexGrid(dimensions)
+        
+        # Create display configuration
+        display_config = DisplayConfig(
+            hex_size=display.HEX_SIZE,
+            background_color=colors.BACKGROUND,
+            line_color=colors.GRID_LINES,
+            line_width=display.GRID_LINE_WIDTH,
+            padding=display.GRID_PADDING
+        )
+        
+        # Initialize grid display
+        self.grid_display = GridDisplay(
+            grid=self.grid,
+            config=display_config,
+            surface=self.screen
+        )
+
+    def handle_events(self):
         """Process all pygame events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            elif event.type == pygame.VIDEORESIZE:
+                self.screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+                self.grid_display.handle_resize((event.w, event.h))
 
-    def update(self) -> None:
+    def update(self):
         """Update game state."""
-        pass  # Will be implemented as we add simulation features
+        pass  # Will be implemented in the next step
 
-    def render(self) -> None:
+    def render(self):
         """Render the current game state."""
-        self.screen.fill(colors.BACKGROUND)
+        self.grid_display.render()
         pygame.display.flip()
 
-    def run(self) -> None:
+    def run(self):
         """Run the main game loop."""
-        self.running = True
-        while self.running:
-            self.handle_events()
-            self.update()
-            self.render()
-            self.clock.tick(display.FPS)
+        try:
+            while self.running:
+                self.handle_events()
+                self.update()
+                self.render()
+                self.clock.tick(display.FPS)
+        finally:
+            pygame.quit()
+            sys.exit()
 
-    def cleanup(self) -> None:
-        """Clean up pygame resources."""
-        pygame.quit()
 
-
-def main() -> NoReturn:
-    """Main entry point of the application."""
+def main():
+    """Entry point of the application."""
     game = GameLoop()
-    try:
-        game.run()
-    finally:
-        game.cleanup()
-    sys.exit(0)
+    game.run()
 
 
 if __name__ == "__main__":
