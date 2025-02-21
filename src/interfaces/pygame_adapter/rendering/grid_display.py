@@ -72,13 +72,10 @@ class GridDisplay:
             Tuple[float, float]: The (width, height) of the grid in pixels
         """
         # For flat-topped hexagons:
-        # Total width = width * (size * 3/2) + size/2
-        # Total height = height * (size * √3) + (size * √3/2)
-        hex_width = self.config.hex_size * 2
-        hex_height = self.config.hex_size * (3 ** 0.5)
-        
-        total_width = (self.grid.dimensions.width * hex_width * 3/4) + (hex_width/4)
-        total_height = (self.grid.dimensions.height * hex_height) + (hex_height/2)
+        # Total width = columns * (3 * size) + size  # Last column needs extra size
+        # Total height = rows * (sqrt(3)/2 * size)
+        total_width = (self.grid.dimensions.width * 3 * self.config.hex_size) + self.config.hex_size
+        total_height = self.grid.dimensions.height * (self.config.hex_size * (3 ** 0.5) / 2)
         
         return total_width, total_height
     
