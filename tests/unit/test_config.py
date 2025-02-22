@@ -41,11 +41,10 @@ def test_colors_initialization() -> None:
             and all(0 <= value <= 255 for value in color)
         )
 
-    assert is_valid_rgb(colors.BLACK)
-    assert is_valid_rgb(colors.WHITE)
     assert is_valid_rgb(colors.BACKGROUND)
-    assert colors.BLACK == (0, 0, 0)
-    assert colors.WHITE == (255, 255, 255)
+    assert is_valid_rgb(colors.GRID_LINES)
+    assert colors.BACKGROUND == (0, 0, 0)
+    assert colors.GRID_LINES == (100, 100, 100)
 
 
 def test_colors_immutability() -> None:
@@ -62,12 +61,8 @@ def test_colors_immutability() -> None:
 def test_simulation_config_initialization() -> None:
     """Test that SimulationConfig is initialized with correct default values."""
     config = SimulationConfig()
-    assert isinstance(config.INITIAL_GRID_SIZE, tuple)
-    assert len(config.INITIAL_GRID_SIZE) == 2
-    assert all(isinstance(dim, int) for dim in config.INITIAL_GRID_SIZE)
-    assert all(dim > 0 for dim in config.INITIAL_GRID_SIZE)
-    assert isinstance(config.TIME_STEP, float)
-    assert config.TIME_STEP > 0
+    assert isinstance(config.SIMULATION_SPEED, float)
+    assert config.SIMULATION_SPEED > 0
 
 
 def test_simulation_config_immutability() -> None:

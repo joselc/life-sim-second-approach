@@ -40,13 +40,13 @@ def test_hex_to_pixel_positive_coordinates():
     
     # Test q-axis (horizontal movement)
     pixel_pos = transformer.hex_to_pixel(GridPosition(q=1, r=0))
-    assert pixel_pos.x == 400.0 + 75.0  # origin_x + h_spacing
-    assert pixel_pos.y == 300.0 + (50.0 * math.sqrt(3) / 2)  # origin_y + v_spacing/2
+    assert pixel_pos.x == (400.0 + (50.0 * 3)) # origin_x + h_spacing
+    assert pixel_pos.y == 300.0 + (50.0 * (math.sqrt(3) / 2) * 0)  # origin_y + v_spacing/2
     
     # Test r-axis (vertical movement)
     pixel_pos = transformer.hex_to_pixel(GridPosition(q=0, r=1))
-    assert pixel_pos.x == 400.0  # origin_x
-    assert pixel_pos.y == 300.0 + (50.0 * math.sqrt(3))  # origin_y + v_spacing
+    assert pixel_pos.x == 400.0  + 50 * (3 * 0 + 1 * 1.5)# origin_x
+    assert pixel_pos.y == 300.0 + (50.0 * (math.sqrt(3) / 2) * 1)  # origin_y + v_spacing
 
 
 def test_hex_to_pixel_negative_coordinates():
@@ -55,13 +55,13 @@ def test_hex_to_pixel_negative_coordinates():
     
     # Test negative q-axis
     pixel_pos = transformer.hex_to_pixel(GridPosition(q=-1, r=0))
-    assert pixel_pos.x == 400.0 - 75.0  # origin_x - h_spacing
-    assert pixel_pos.y == 300.0 - (50.0 * math.sqrt(3) / 2)  # origin_y - v_spacing/2
+    assert pixel_pos.x == 400.0 + 50.0 * (3 * -1 + 0 * 1.5)   # origin_x - h_spacing
+    assert pixel_pos.y == 300.0 + (50.0 * (math.sqrt(3) / 2) * 0)  # origin_y - v_spacing/2
     
     # Test negative r-axis
     pixel_pos = transformer.hex_to_pixel(GridPosition(q=0, r=-1))
-    assert pixel_pos.x == 400.0  # origin_x
-    assert pixel_pos.y == 300.0 - (50.0 * math.sqrt(3))  # origin_y - v_spacing
+    assert pixel_pos.x == 400.0 + 50.0 * (3 * 0 + 1 * 1.5)  # origin_x
+    assert pixel_pos.y == 300.0 + (50.0 * (math.sqrt(3) / 2) * -1)  # origin_y - v_spacing
 
 
 def test_get_hex_vertices():

@@ -7,7 +7,7 @@ from typing import Tuple
 class DisplayConfig:
     """Display configuration settings."""
     WINDOW_SIZE: Tuple[int, int] = (1024, 768)
-    WINDOW_TITLE: str = "HexLife Simulation"
+    WINDOW_TITLE: str = "HexLife: Hexagonal Life Simulation"
     FPS: int = 60
     
     # Grid display settings

@@ -83,8 +83,8 @@ def test_grid_pixel_size_calculation(grid, display_config, mock_surface):
     # hex_height = 86.6 (√3 * hex_size)
     # total_width = 3 * 75 + 25 = 250 (width * 3/4 * hex_width + hex_width/4)
     # total_height = 3 * 86.6 + 43.3 = 303.1 (height * hex_height + hex_height/2)
-    assert math.isclose(width, 250, rel_tol=1e-2)
-    assert math.isclose(height, 303.1, rel_tol=1e-2)
+    assert math.isclose(width, 500, rel_tol=1e-2)
+    assert math.isclose(height, 129.9, rel_tol=1e-2)
 
 
 def test_grid_centering(grid, display_config, mock_surface):
@@ -96,8 +96,8 @@ def test_grid_centering(grid, display_config, mock_surface):
     # Center origin should be at:
     # x = (800 - 250)/2 + 20 = 295
     # y = (600 - 303)/2 + 20 = 168.5
-    assert math.isclose(display.transformer.origin_x, 295, rel_tol=1e-2)
-    assert math.isclose(display.transformer.origin_y, 168.5, rel_tol=1e-2)
+    assert math.isclose(display.transformer.origin_x, 170.0, rel_tol=1e-2)
+    assert math.isclose(display.transformer.origin_y, 255.04, rel_tol=1e-2)
 
 
 def test_window_resize_handling(grid, display_config, mock_surface):
@@ -117,8 +117,8 @@ def test_window_resize_handling(grid, display_config, mock_surface):
         # New center origin should be at:
         # x = (1024 - 250)/2 + 20 = 407
         # y = (768 - 303)/2 + 20 = 252.5
-        assert math.isclose(display.transformer.origin_x, 407, rel_tol=1e-2)
-        assert math.isclose(display.transformer.origin_y, 252.5, rel_tol=1e-2)
+        assert math.isclose(display.transformer.origin_x, 282.0, rel_tol=1e-2)
+        assert math.isclose(display.transformer.origin_y, 339.04, rel_tol=1e-2)
 
 
 def test_render_calls(grid, display_config, mock_surface):

@@ -17,7 +17,7 @@ class GameLoop:
         self.screen = pygame.display.set_mode(display.WINDOW_SIZE, pygame.RESIZABLE)
         pygame.display.set_caption(display.WINDOW_TITLE)
         self.clock = pygame.time.Clock()
-        self.running = True
+        self.running = False
 
         # Initialize grid and display components
         dimensions = GridDimensions(display.GRID_WIDTH, display.GRID_HEIGHT)
@@ -59,21 +59,25 @@ class GameLoop:
 
     def run(self):
         """Run the main game loop."""
-        try:
-            while self.running:
-                self.handle_events()
-                self.update()
-                self.render()
-                self.clock.tick(display.FPS)
-        finally:
-            pygame.quit()
-            sys.exit()
+        self.running = True
+        while self.running:
+            self.handle_events()
+            self.update()
+            self.render()
+            self.clock.tick(display.FPS)
 
+    def cleanup(self):
+        """Cleanup the game loop."""
+        pygame.quit()
 
 def main():
     """Entry point of the application."""
     game = GameLoop()
-    game.run()
+    try:    
+        game.run()
+    finally:
+        game.cleanup()
+    sys.exit(0)
 
 
 if __name__ == "__main__":
