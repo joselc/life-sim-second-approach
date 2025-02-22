@@ -1,7 +1,7 @@
 """Coordinate transformation utilities for rendering hexagonal grids."""
 from dataclasses import dataclass
 from math import sqrt
-from typing import Tuple
+from typing import List, Tuple
 
 from src.domain.value_objects.grid_position import GridPosition
 
@@ -40,7 +40,7 @@ class HexToPixelTransformer:
         origin_y (float): The y-coordinate of the grid's origin in pixels
     """
 
-    def __init__(self, hex_size: float, origin_x: float, origin_y: float):
+    def __init__(self, hex_size: float, origin_x: float, origin_y: float) -> None:
         """Initialize the transformer with hexagon size and origin position.
 
         Args:
@@ -66,20 +66,18 @@ class HexToPixelTransformer:
             PixelPosition: The corresponding pixel coordinates
         """
         # For flat-topped hexagons in rectangular layout:
-        # x = origin_x + size * (3/2 * q + (r % 2))  # Use 3/2 for proper horizontal spacing
-        # y = origin_y + size * sqrt(3)/2 * r        # Keep current vertical spacing
         x = self.origin_x + self.hex_size * (3 * hex_pos.q + (hex_pos.r % 2) * 1.5)
         y = self.origin_y + self.hex_size * (sqrt(3) / 2) * hex_pos.r
         return PixelPosition(x=x, y=y)
 
-    def get_hex_vertices(self, center: PixelPosition) -> list[Tuple[float, float]]:
+    def get_hex_vertices(self, center: PixelPosition) -> List[Tuple[float, float]]:
         """Get the vertex coordinates for a hexagon at the given center position.
 
         Args:
             center (PixelPosition): The center position of the hexagon
 
         Returns:
-            list[Tuple[float, float]]: List of (x,y) coordinates for the vertices
+            List[Tuple[float, float]]: List of (x,y) coordinates for the vertices
         """
         # Flat-topped hexagon vertices, starting at the rightmost point
         # and going counter-clockwise

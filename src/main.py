@@ -15,7 +15,7 @@ from src.interfaces.pygame_adapter.rendering.grid_display import (
 class GameLoop:
     """Main game loop class that handles the simulation lifecycle."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the game loop and Pygame."""
         pygame.init()
         self.screen = pygame.display.set_mode(display.WINDOW_SIZE, pygame.RESIZABLE)
@@ -41,7 +41,7 @@ class GameLoop:
             grid=self.grid, config=display_config, surface=self.screen
         )
 
-    def handle_events(self):
+    def handle_events(self) -> None:
         """Process all pygame events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -52,16 +52,16 @@ class GameLoop:
                 )
                 self.grid_display.handle_resize((event.w, event.h))
 
-    def update(self):
+    def update(self) -> None:
         """Update game state."""
         pass  # Will be implemented in the next step
 
-    def render(self):
+    def render(self) -> None:
         """Render the current game state."""
         self.grid_display.render()
         pygame.display.flip()
 
-    def run(self):
+    def run(self) -> None:
         """Run the main game loop."""
         self.running = True
         while self.running:
@@ -70,12 +70,12 @@ class GameLoop:
             self.render()
             self.clock.tick(display.FPS)
 
-    def cleanup(self):
-        """Cleanup the game loop."""
+    def cleanup(self) -> None:
+        """Clean up resources before exiting."""
         pygame.quit()
 
 
-def main():
+def main() -> None:
     """Entry point of the application."""
     game = GameLoop()
     try:
