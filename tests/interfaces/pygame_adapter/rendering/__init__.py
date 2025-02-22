@@ -1,1 +1,1 @@
-"""Tests for the Pygame adapter rendering components.""" 
+"""Tests for the Pygame adapter rendering components."""

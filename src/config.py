@@ -6,10 +6,11 @@ from typing import Tuple
 @dataclass(frozen=True)
 class DisplayConfig:
     """Display configuration settings."""
+
     WINDOW_SIZE: Tuple[int, int] = (1024, 768)
     WINDOW_TITLE: str = "HexLife: Hexagonal Life Simulation"
     FPS: int = 60
-    
+
     # Grid display settings
     GRID_WIDTH: int = 5
     GRID_HEIGHT: int = 10
@@ -21,6 +22,7 @@ class DisplayConfig:
 @dataclass(frozen=True)
 class Colors:
     """Color definitions for the simulation."""
+
     BACKGROUND: Tuple[int, int, int] = (0, 0, 0)  # Black
     GRID_LINES: Tuple[int, int, int] = (100, 100, 100)  # Gray
 
@@ -28,6 +30,7 @@ class Colors:
 @dataclass(frozen=True)
 class SimulationConfig:
     """Simulation behavior configuration."""
+
     SIMULATION_SPEED: float = 1.0  # Base speed multiplier
 
 

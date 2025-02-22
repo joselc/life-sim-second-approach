@@ -14,7 +14,7 @@ def mock_pygame() -> MagicMock:
         # Create a proper surface mock
         surface_mock = create_autospec(pygame.Surface)
         surface_mock.fill = MagicMock()
-        
+
         # Mock display module
         mock.display.set_mode.return_value = surface_mock
         mock.display.set_caption = MagicMock()
@@ -85,7 +85,7 @@ def test_game_loop_render(mock_pygame: MagicMock) -> None:
         # Create an instance of the mock
         mock_grid_display_instance = MagicMock()
         mock_grid_display.return_value = mock_grid_display_instance
-        
+
         game = GameLoop()
         game.render()
 
@@ -101,7 +101,7 @@ def test_game_loop_run_sequence(mock_pygame: MagicMock) -> None:
         # Create an instance of the mock
         mock_grid_display_instance = MagicMock()
         mock_grid_display.return_value = mock_grid_display_instance
-        
+
         game = GameLoop()
 
         # Make the game loop run only once

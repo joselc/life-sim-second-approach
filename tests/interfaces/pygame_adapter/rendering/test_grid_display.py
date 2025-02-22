@@ -20,7 +20,7 @@ def display_config():
         background_color=(0, 0, 0),
         line_color=(100, 100, 100),
         line_width=1,
-        padding=20
+        padding=20,
     )
 
 
@@ -56,7 +56,7 @@ def test_display_config_custom_values():
         background_color=(255, 255, 255),
         line_color=(0, 255, 0),
         line_width=2,
-        padding=30
+        padding=30,
     )
     assert config.hex_size == 40.0
     assert config.background_color == (255, 255, 255)
@@ -77,7 +77,7 @@ def test_grid_pixel_size_calculation(grid, display_config, mock_surface):
     """Test calculation of grid size in pixels."""
     display = GridDisplay(grid=grid, config=display_config, surface=mock_surface)
     width, height = display._calculate_grid_pixel_size()
-    
+
     # For a 3x3 grid with hex_size=50:
     # hex_width = 100 (2 * hex_size)
     # hex_height = 86.6 (√3 * hex_size)
@@ -90,7 +90,7 @@ def test_grid_pixel_size_calculation(grid, display_config, mock_surface):
 def test_grid_centering(grid, display_config, mock_surface):
     """Test that the grid is properly centered."""
     display = GridDisplay(grid=grid, config=display_config, surface=mock_surface)
-    
+
     # For an 800x600 window, 3x3 grid, and 20px padding:
     # Grid size is ~250x303 pixels
     # Center origin should be at:
@@ -103,15 +103,15 @@ def test_grid_centering(grid, display_config, mock_surface):
 def test_window_resize_handling(grid, display_config, mock_surface):
     """Test that window resizing updates the display correctly."""
     display = GridDisplay(grid=grid, config=display_config, surface=mock_surface)
-    
+
     # Mock the new surface creation
     new_surface = Mock(spec=pygame.Surface)
     new_surface.get_width.return_value = 1024
     new_surface.get_height.return_value = 768
-    
-    with patch('pygame.display.set_mode', return_value=new_surface):
+
+    with patch("pygame.display.set_mode", return_value=new_surface):
         display.handle_resize((1024, 768))
-        
+
         # For a 1024x768 window, 3x3 grid, and 20px padding:
         # Grid size is still ~250x303 pixels
         # New center origin should be at:
@@ -124,13 +124,13 @@ def test_window_resize_handling(grid, display_config, mock_surface):
 def test_render_calls(grid, display_config, mock_surface):
     """Test that render method calls the expected functions."""
     display = GridDisplay(grid=grid, config=display_config, surface=mock_surface)
-    
+
     # Replace the renderer with a mock
     display.renderer = Mock()
-    
+
     # Call render
     display.render()
-    
+
     # Verify the surface is cleared and grid is rendered
     mock_surface.fill.assert_called_once_with(display_config.background_color)
-    display.renderer.render.assert_called_once_with(mock_surface) 
+    display.renderer.render.assert_called_once_with(mock_surface)

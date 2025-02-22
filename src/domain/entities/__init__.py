@@ -2,4 +2,4 @@
 
 from .grid import HexGrid, InvalidGridPosition
 
-__all__ = ['HexGrid', 'InvalidGridPosition']
+__all__ = ["HexGrid", "InvalidGridPosition"]

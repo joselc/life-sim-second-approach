@@ -43,10 +43,7 @@ def test_grid_renderer_initialization(grid, transformer):
 def test_grid_renderer_custom_style(grid, transformer):
     """Test that the grid renderer accepts custom style parameters."""
     renderer = GridRenderer(
-        grid=grid,
-        transformer=transformer,
-        line_color=(255, 0, 0),
-        line_width=2
+        grid=grid, transformer=transformer, line_color=(255, 0, 0), line_width=2
     )
     assert renderer.line_color == (255, 0, 0)
     assert renderer.line_width == 2
@@ -55,14 +52,14 @@ def test_grid_renderer_custom_style(grid, transformer):
 def test_grid_renderer_draws_all_valid_positions(grid, transformer, mock_surface):
     """Test that the renderer draws all valid positions in the grid."""
     renderer = GridRenderer(grid=grid, transformer=transformer)
-    
+
     # Mock the draw_polygon function
-    with patch('pygame.draw.polygon') as mock_draw:
+    with patch("pygame.draw.polygon") as mock_draw:
         renderer.render(mock_surface)
-        
+
         # For a 2x2 grid, should call draw_polygon 4 times (once per cell)
         assert mock_draw.call_count == 4
-        
+
         # Verify each call used the correct color and line width
         for call in mock_draw.call_args_list:
             args, kwargs = call
@@ -73,24 +70,35 @@ def test_grid_renderer_draws_all_valid_positions(grid, transformer, mock_surface
 def test_grid_renderer_correct_vertex_calculation(grid, transformer, mock_surface):
     """Test that the renderer calculates correct vertices for hexagons."""
     renderer = GridRenderer(grid=grid, transformer=transformer)
-    
+
     # Mock the transformer's methods
     expected_pixel_pos = PixelPosition(x=150.0, y=150.0)
-    expected_vertices = [(x, y) for x, y in [(200, 150), (175, 193.3), (125, 193.3),
-                                           (100, 150), (125, 106.7), (175, 106.7)]]
-    
-    with patch.object(transformer, 'hex_to_pixel',
-                     return_value=expected_pixel_pos) as mock_hex_to_pixel:
-        with patch.object(transformer, 'get_hex_vertices',
-                         return_value=expected_vertices) as mock_get_vertices:
-            with patch('pygame.draw.polygon') as mock_draw:
+    expected_vertices = [
+        (x, y)
+        for x, y in [
+            (200, 150),
+            (175, 193.3),
+            (125, 193.3),
+            (100, 150),
+            (125, 106.7),
+            (175, 106.7),
+        ]
+    ]
+
+    with patch.object(
+        transformer, "hex_to_pixel", return_value=expected_pixel_pos
+    ) as mock_hex_to_pixel:
+        with patch.object(
+            transformer, "get_hex_vertices", return_value=expected_vertices
+        ) as mock_get_vertices:
+            with patch("pygame.draw.polygon") as mock_draw:
                 renderer.render(mock_surface)
-                
+
                 # Verify transformer methods were called for each grid position
                 assert mock_hex_to_pixel.call_count == 4
                 assert mock_get_vertices.call_count == 4
-                
+
                 # Verify the vertices were used in drawing
                 for call in mock_draw.call_args_list:
                     args, kwargs = call
-                    assert args[2] == expected_vertices 
+                    assert args[2] == expected_vertices

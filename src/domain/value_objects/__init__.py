@@ -3,4 +3,4 @@
 from .grid_position import GridPosition
 from .grid_dimensions import GridDimensions
 
-__all__ = ['GridPosition', 'GridDimensions']
+__all__ = ["GridPosition", "GridDimensions"]
