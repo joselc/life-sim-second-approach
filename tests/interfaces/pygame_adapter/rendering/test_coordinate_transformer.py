@@ -1,6 +1,7 @@
 """Tests for the coordinate transformation utilities."""
 import dataclasses
 import math
+
 import pytest
 
 from src.domain.value_objects.grid_position import GridPosition

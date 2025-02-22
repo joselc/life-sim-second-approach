@@ -1,5 +1,7 @@
 import dataclasses
+
 import pytest
+
 from src.domain.value_objects.grid_dimensions import GridDimensions
 
 

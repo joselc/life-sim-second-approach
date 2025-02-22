@@ -1,7 +1,8 @@
 """Tests for the grid renderer."""
+from unittest.mock import Mock, patch
+
 import pygame
 import pytest
-from unittest.mock import Mock, patch
 
 from src.domain.entities.grid import HexGrid
 from src.domain.value_objects.grid_dimensions import GridDimensions

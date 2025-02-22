@@ -1,13 +1,14 @@
 """Main entry point for the HexLife simulation."""
 import sys
+
 import pygame
 
-from src.config import display, colors
+from src.config import colors, display
 from src.domain.entities.grid import HexGrid
 from src.domain.value_objects.grid_dimensions import GridDimensions
 from src.interfaces.pygame_adapter.rendering.grid_display import (
-    GridDisplay,
     DisplayConfig,
+    GridDisplay,
 )
 
 

@@ -6,6 +6,7 @@ import pygame
 
 from src.domain.entities.grid import HexGrid
 from src.domain.value_objects.grid_dimensions import GridDimensions
+
 from .coordinate_transformer import HexToPixelTransformer
 from .grid_renderer import GridRenderer
 

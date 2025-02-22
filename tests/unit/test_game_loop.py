@@ -1,5 +1,5 @@
 """Unit tests for the game loop implementation."""
-from unittest.mock import MagicMock, patch, create_autospec
+from unittest.mock import MagicMock, create_autospec, patch
 
 import pygame
 import pytest
