@@ -5,7 +5,6 @@ from typing import Tuple
 import pygame
 
 from src.domain.entities.grid import HexGrid
-from src.domain.value_objects.grid_dimensions import GridDimensions
 
 from .coordinate_transformer import HexToPixelTransformer
 from .grid_renderer import GridRenderer
@@ -46,12 +45,17 @@ class GridDisplay:
         renderer (GridRenderer): Grid renderer
     """
 
-    def __init__(self, grid: HexGrid, config: DisplayConfig, surface: pygame.Surface):
+    def __init__(
+        self,
+        grid: HexGrid,
+        config: DisplayConfig,
+        surface: pygame.Surface
+    ) -> None:
         """Initialize the grid display.
 
         Args:
             grid (HexGrid): The grid to display
-            config (DisplayConfig): Display configuration
+            config (DisplayConfig): Display configuration parameters
             surface (pygame.Surface): The surface to render on
         """
         self.grid = grid
@@ -74,7 +78,7 @@ class GridDisplay:
             Tuple[float, float]: The (width, height) of the grid in pixels
         """
         # For flat-topped hexagons:
-        # Total width = columns * (3 * size) + size  # Last column needs extra size
+        # Total width = columns * (3 * size) + size
         # Total height = rows * (sqrt(3)/2 * size)
         total_width = (
             self.grid.dimensions.width * 3 * self.config.hex_size
@@ -105,7 +109,9 @@ class GridDisplay:
         origin_y += self.config.padding
 
         return HexToPixelTransformer(
-            hex_size=self.config.hex_size, origin_x=origin_x, origin_y=origin_y
+            hex_size=self.config.hex_size,
+            origin_x=origin_x,
+            origin_y=origin_y
         )
 
     def handle_resize(self, new_size: Tuple[int, int]) -> None:

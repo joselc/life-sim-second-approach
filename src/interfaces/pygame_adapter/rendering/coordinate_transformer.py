@@ -11,7 +11,8 @@ class PixelPosition:
     """Screen coordinates for rendering.
 
     This class represents a position in pixel coordinates on the screen.
-    It is specific to the rendering layer and should not be used in domain logic.
+    It is specific to the rendering layer and should not be used in domain
+    logic.
 
     Attributes:
         x (float): The x-coordinate in pixels
@@ -40,7 +41,12 @@ class HexToPixelTransformer:
         origin_y (float): The y-coordinate of the grid's origin in pixels
     """
 
-    def __init__(self, hex_size: float, origin_x: float, origin_y: float) -> None:
+    def __init__(
+        self,
+        hex_size: float,
+        origin_x: float,
+        origin_y: float,
+    ) -> None:
         """Initialize the transformer with hexagon size and origin position.
 
         Args:
@@ -66,27 +72,46 @@ class HexToPixelTransformer:
             PixelPosition: The corresponding pixel coordinates
         """
         # For flat-topped hexagons in rectangular layout:
-        x = self.origin_x + self.hex_size * (3 * hex_pos.q + (hex_pos.r % 2) * 1.5)
+        x = self.origin_x + self.hex_size * (
+            3 * hex_pos.q + (hex_pos.r % 2) * 1.5
+        )
         y = self.origin_y + self.hex_size * (sqrt(3) / 2) * hex_pos.r
         return PixelPosition(x=x, y=y)
 
-    def get_hex_vertices(self, center: PixelPosition) -> List[Tuple[float, float]]:
-        """Get the vertex coordinates for a hexagon at the given center position.
+    def get_hex_vertices(
+        self,
+        center: PixelPosition,
+    ) -> List[Tuple[float, float]]:
+        """Get the vertex coordinates for a hexagon at the given center
+            position.
 
         Args:
             center (PixelPosition): The center position of the hexagon
 
         Returns:
-            List[Tuple[float, float]]: List of (x,y) coordinates for the vertices
+            List[Tuple[float, float]]: List of (x,y) coordinates for the
+            vertices
         """
         # Flat-topped hexagon vertices, starting at the rightmost point
         # and going counter-clockwise
         vertices = [
             (center.x + self.hex_size, center.y),  # Right
-            (center.x + self.hex_size / 2, center.y + self.height / 2),  # Bottom-right
-            (center.x - self.hex_size / 2, center.y + self.height / 2),  # Bottom-left
+            (
+                center.x + self.hex_size / 2,
+                center.y + self.height / 2
+            ),  # Bottom-right
+            (
+                center.x - self.hex_size / 2,
+                center.y + self.height / 2
+            ),  # Bottom-left
             (center.x - self.hex_size, center.y),  # Left
-            (center.x - self.hex_size / 2, center.y - self.height / 2),  # Top-left
-            (center.x + self.hex_size / 2, center.y - self.height / 2),  # Top-right
+            (
+                center.x - self.hex_size / 2,
+                center.y - self.height / 2
+            ),  # Top-left
+            (
+                center.x + self.hex_size / 2,
+                center.y - self.height / 2
+            ),  # Top-right
         ]
         return vertices

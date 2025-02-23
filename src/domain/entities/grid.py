@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from ..value_objects.grid_dimensions import GridDimensions
 from ..value_objects.grid_position import GridPosition
@@ -16,7 +15,8 @@ class HexGrid:
     """A hexagonal grid entity.
 
     This class represents the core domain entity for our hexagonal grid system.
-    It is framework-independent and handles the basic grid structure and validation.
+    It is framework-independent and handles the basic grid structure and
+    validation.
 
     Attributes:
         dimensions (GridDimensions): The dimensions of the grid

@@ -18,7 +18,8 @@ class GridRenderer:
 
     Attributes:
         grid (HexGrid): The grid to render
-        transformer (HexToPixelTransformer): Coordinate transformer for pixel conversion
+        transformer (HexToPixelTransformer): Coordinate transformer
+            for pixel conversion
         line_color (Tuple[int, int, int]): RGB color for grid lines
         line_width (int): Width of grid lines in pixels
     """
@@ -29,15 +30,17 @@ class GridRenderer:
         transformer: HexToPixelTransformer,
         line_color: Tuple[int, int, int] = (100, 100, 100),
         line_width: int = 1,
-    ):
+    ) -> None:
         """Initialize the grid renderer.
 
         Args:
             grid (HexGrid): The grid to render
-            transformer (HexToPixelTransformer): Coordinate transformer for pixel conversion
-            line_color (Tuple[int, int, int], optional): RGB color for grid lines.
-                Defaults to gray (100, 100, 100).
-            line_width (int, optional): Width of grid lines in pixels. Defaults to 1.
+            transformer (HexToPixelTransformer): Coordinate transformer
+                for pixel conversion
+            line_color (Tuple[int, int, int], optional): RGB color for
+                grid lines. Defaults to gray (100, 100, 100).
+            line_width (int, optional): Width of grid lines in pixels.
+                Defaults to 1.
         """
         self.grid = grid
         self.transformer = transformer
@@ -69,4 +72,9 @@ class GridRenderer:
         # Get vertex coordinates for the hexagon
         vertices = self.transformer.get_hex_vertices(pixel_pos)
         # Draw the hexagon outline
-        pygame.draw.polygon(surface, self.line_color, vertices, self.line_width)
+        pygame.draw.polygon(
+            surface,
+            self.line_color,
+            vertices,
+            self.line_width,
+        )
