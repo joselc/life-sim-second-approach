@@ -46,10 +46,7 @@ class GridDisplay:
     """
 
     def __init__(
-        self,
-        grid: HexGrid,
-        config: DisplayConfig,
-        surface: pygame.Surface
+        self, grid: HexGrid, config: DisplayConfig, surface: pygame.Surface
     ) -> None:
         """Initialize the grid display.
 
@@ -109,9 +106,7 @@ class GridDisplay:
         origin_y += self.config.padding
 
         return HexToPixelTransformer(
-            hex_size=self.config.hex_size,
-            origin_x=origin_x,
-            origin_y=origin_y
+            hex_size=self.config.hex_size, origin_x=origin_x, origin_y=origin_y
         )
 
     def handle_resize(self, new_size: Tuple[int, int]) -> None:

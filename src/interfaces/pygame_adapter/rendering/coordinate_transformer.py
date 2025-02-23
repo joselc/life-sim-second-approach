@@ -72,9 +72,7 @@ class HexToPixelTransformer:
             PixelPosition: The corresponding pixel coordinates
         """
         # For flat-topped hexagons in rectangular layout:
-        x = self.origin_x + self.hex_size * (
-            3 * hex_pos.q + (hex_pos.r % 2) * 1.5
-        )
+        x = self.origin_x + self.hex_size * (3 * hex_pos.q + (hex_pos.r % 2) * 1.5)
         y = self.origin_y + self.hex_size * (sqrt(3) / 2) * hex_pos.r
         return PixelPosition(x=x, y=y)
 
@@ -96,22 +94,10 @@ class HexToPixelTransformer:
         # and going counter-clockwise
         vertices = [
             (center.x + self.hex_size, center.y),  # Right
-            (
-                center.x + self.hex_size / 2,
-                center.y + self.height / 2
-            ),  # Bottom-right
-            (
-                center.x - self.hex_size / 2,
-                center.y + self.height / 2
-            ),  # Bottom-left
+            (center.x + self.hex_size / 2, center.y + self.height / 2),  # Bottom-right
+            (center.x - self.hex_size / 2, center.y + self.height / 2),  # Bottom-left
             (center.x - self.hex_size, center.y),  # Left
-            (
-                center.x - self.hex_size / 2,
-                center.y - self.height / 2
-            ),  # Top-left
-            (
-                center.x + self.hex_size / 2,
-                center.y - self.height / 2
-            ),  # Top-right
+            (center.x - self.hex_size / 2, center.y - self.height / 2),  # Top-left
+            (center.x + self.hex_size / 2, center.y - self.height / 2),  # Top-right
         ]
         return vertices

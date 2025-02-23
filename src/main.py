@@ -18,10 +18,7 @@ class GameLoop:
     def __init__(self) -> None:
         """Initialize the game loop and Pygame."""
         pygame.init()
-        self.screen = pygame.display.set_mode(
-            display.WINDOW_SIZE,
-            pygame.RESIZABLE
-        )
+        self.screen = pygame.display.set_mode(display.WINDOW_SIZE, pygame.RESIZABLE)
         pygame.display.set_caption(display.WINDOW_TITLE)
         self.clock = pygame.time.Clock()
         self.running = False
