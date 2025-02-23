@@ -2,6 +2,17 @@
 
 A life simulation engine built on a hexagonal grid, modeling ecological interactions between terrain, plants, climate, and eventually animals. The simulation emphasizes emergent behaviors through simple rule-based interactions between entities.
 
+[![Tests](https://github.com/joselc/life-sim-second-approach/actions/workflows/test.yml/badge.svg)](https://github.com/joselc/life-sim-second-approach/actions/workflows/test.yml)
+[![Lint](https://github.com/joselc/life-sim-second-approach/actions/workflows/lint.yml/badge.svg)](https://github.com/joselc/life-sim-second-approach/actions/workflows/lint.yml)
+[![codecov](https://codecov.io/gh/joselc/life-sim-second-approach/branch/main/graph/badge.svg)](https://codecov.io/gh/joselc/life-sim-second-approach)
+[![Python Versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)](https://github.com/joselc/life-sim-second-approach/blob/main/.github/workflows/test.yml)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Checked with mypy](https://img.shields.io/badge/mypy-checked-blue)](http://mypy-lang.org/)
+[![Linting: flake8](https://img.shields.io/badge/linting-flake8-yellowgreen)](https://flake8.pycqa.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Pygame](https://img.shields.io/badge/Pygame-2.5.2-green.svg)](https://www.pygame.org/)
+
 ## Features (Planned)
 
 - Hexagonal grid-based world
