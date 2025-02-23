@@ -13,7 +13,8 @@ exclude =
     dist,
     *.pyc,
     *.egg-info,
-    .eggs
+    .eggs,
+    ./venv
 
 # Maximum complexity allowed for functions
 max-complexity = 10

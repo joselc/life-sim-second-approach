@@ -6,7 +6,6 @@ import pytest
 
 from src.domain.entities.grid import HexGrid
 from src.domain.value_objects.grid_dimensions import GridDimensions
-from src.domain.value_objects.grid_position import GridPosition
 from src.interfaces.pygame_adapter.rendering.coordinate_transformer import (
     HexToPixelTransformer,
     PixelPosition,
