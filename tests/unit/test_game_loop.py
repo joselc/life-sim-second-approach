@@ -1,5 +1,5 @@
 """Unit tests for the game loop implementation."""
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, create_autospec, patch
 
 import pygame
 import pytest
@@ -11,9 +11,18 @@ from src.main import GameLoop
 def mock_pygame() -> MagicMock:
     """Set up mock for pygame module."""
     with patch("src.main.pygame") as mock:
+        # Create a proper surface mock
+        surface_mock = create_autospec(pygame.Surface)
+        surface_mock.fill = MagicMock()
+
         # Mock display module
-        mock.display.set_mode.return_value = MagicMock()
+        mock.display.set_mode.return_value = surface_mock
         mock.display.set_caption = MagicMock()
+        mock.display.flip = MagicMock()
+
+        # Mock drawing functions
+        mock.draw = MagicMock()
+        mock.draw.polygon = MagicMock()  # This is the key addition
 
         # Mock time module
         clock_mock = MagicMock()
@@ -23,8 +32,10 @@ def mock_pygame() -> MagicMock:
         # Mock event module
         mock.event.get.return_value = []
 
-        # Mock QUIT constant
+        # Mock QUIT and VIDEORESIZE constants
         mock.QUIT = pygame.QUIT
+        mock.VIDEORESIZE = pygame.VIDEORESIZE
+        mock.RESIZABLE = pygame.RESIZABLE
 
         yield mock
 
@@ -70,28 +81,39 @@ def test_game_loop_handle_quit_event(mock_pygame: MagicMock) -> None:
 
 def test_game_loop_render(mock_pygame: MagicMock) -> None:
     """Test that render method updates the display."""
-    game = GameLoop()
-    game.render()
+    with patch("src.main.GridDisplay") as mock_grid_display:
+        # Create an instance of the mock
+        mock_grid_display_instance = MagicMock()
+        mock_grid_display.return_value = mock_grid_display_instance
 
-    # Check that screen is filled and display is flipped
-    game.screen.fill.assert_called_once()
-    mock_pygame.display.flip.assert_called_once()
+        game = GameLoop()
+        game.render()
+
+        # Check that grid display render was called
+        mock_grid_display_instance.render.assert_called_once()
+        # Check that display was flipped
+        mock_pygame.display.flip.assert_called_once()
 
 
 def test_game_loop_run_sequence(mock_pygame: MagicMock) -> None:
     """Test that run method executes the game loop in correct sequence."""
-    game = GameLoop()
+    with patch("src.main.GridDisplay") as mock_grid_display:
+        # Create an instance of the mock
+        mock_grid_display_instance = MagicMock()
+        mock_grid_display.return_value = mock_grid_display_instance
 
-    # Make the game loop run only once
-    def stop_after_one_iteration(*args: tuple, **kwargs: dict) -> None:
-        game.running = False
+        game = GameLoop()
 
-    mock_pygame.time.Clock().tick.side_effect = stop_after_one_iteration
+        # Make the game loop run only once
+        def stop_after_one_iteration(*args: tuple, **kwargs: dict) -> None:
+            game.running = False
 
-    game.run()
+        mock_pygame.time.Clock().tick.side_effect = stop_after_one_iteration
 
-    # Check that the game loop executed all steps
-    assert mock_pygame.event.get.called
-    assert game.screen.fill.called
-    assert mock_pygame.display.flip.called
-    assert mock_pygame.time.Clock().tick.called
+        game.run()
+
+        # Check that the game loop executed all steps
+        assert mock_pygame.event.get.called
+        assert mock_grid_display_instance.render.called_once()
+        assert mock_pygame.display.flip.called
+        assert mock_pygame.time.Clock().tick.called

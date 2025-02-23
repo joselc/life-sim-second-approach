@@ -1,5 +1,4 @@
 """Shared test fixtures for the HexLife test suite."""
-import dataclasses
 from typing import Generator
 
 import pytest
