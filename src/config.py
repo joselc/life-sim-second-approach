@@ -38,9 +38,13 @@ class Colors:
 
     BACKGROUND: Tuple[int, int, int] = (0, 0, 0)  # Black
     GRID_LINES: Tuple[int, int, int] = (100, 100, 100)  # Gray
-    
+
     # UI Colors
-    COMMAND_COLUMN_BACKGROUND: Tuple[int, int, int] = (40, 44, 52)  # Dark theme background
+    COMMAND_COLUMN_BACKGROUND: Tuple[int, int, int] = (
+        40,
+        44,
+        52,
+    )  # Dark theme background
     COMMAND_COLUMN_TEXT: Tuple[int, int, int] = (255, 255, 255)  # White text
     AREA_SEPARATOR_COLOR: Tuple[int, int, int] = (70, 70, 70)  # Dark gray
 
