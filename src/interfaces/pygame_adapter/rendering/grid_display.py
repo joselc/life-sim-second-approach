@@ -115,8 +115,9 @@ class GridDisplay:
         Args:
             new_size (Tuple[int, int]): New window size (width, height)
         """
-        # Update surface reference
-        self.surface = pygame.display.set_mode(new_size, pygame.RESIZABLE)
+        # We no longer update the surface here since it's now a subsurface
+        # that will be updated by the main game loop
+
         # Recalculate transformer for new window size
         self.transformer = self._create_centered_transformer()
         # Update renderer with new transformer
