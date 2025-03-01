@@ -58,22 +58,33 @@ class GameLoop:
             if event.type == pygame.QUIT:
                 self.running = False
             elif event.type == pygame.VIDEORESIZE:
-                self.screen = pygame.display.set_mode(
-                    (event.w, event.h), pygame.RESIZABLE
-                )
+                # Ensure minimum window size to avoid layout problems
+                width = max(100, event.w)  # Minimum width of 100 pixels
+                height = max(100, event.h)  # Minimum height of 100 pixels
+
+                # Create the new window
+                self.screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
 
                 # Update layout components with new size
-                self.layout_manager.handle_resize((event.w, event.h))
+                self.layout_manager.handle_resize((width, height))
                 self.command_column.handle_resize(self.layout_manager.command_area)
 
-                # Update simulation surface
-                self.simulation_surface = self.screen.subsurface(
-                    self.layout_manager.simulation_area
-                )
+                try:
+                    # Update simulation surface
+                    self.simulation_surface = self.screen.subsurface(
+                        self.layout_manager.simulation_area
+                    )
 
-                # Update grid display with new simulation surface
-                self.grid_display.surface = self.simulation_surface
-                self.grid_display.handle_resize(self.simulation_surface.get_size())
+                    # Update grid display with new simulation surface
+                    self.grid_display.surface = self.simulation_surface
+                    self.grid_display.handle_resize(self.simulation_surface.get_size())
+                except ValueError as e:
+                    # If we get an error creating the subsurface,
+                    # use the full screen as a fallback
+                    print(f"Warning: Error in resize handling: {e}")
+                    self.simulation_surface = self.screen
+                    self.grid_display.surface = self.screen
+                    self.grid_display.handle_resize(self.screen.get_size())
 
     def update(self) -> None:
         """Update game state."""

@@ -39,7 +39,16 @@ class LayoutManager:
             pygame.Rect: Rectangle defining the command column area
         """
         window_width, window_height = self.window_size
+
+        # Ensure we have a positive window size
+        window_width = max(1, window_width)
+        window_height = max(1, window_height)
+
+        # Calculate the column width as a proportion of the window width
         column_width = int(window_width * display.COMMAND_COLUMN_RATIO)
+
+        # Ensure the column has at least 1 pixel width, but doesn't exceed window width
+        column_width = max(1, min(column_width, window_width))
 
         return pygame.Rect(0, 0, column_width, window_height)
 
@@ -55,8 +64,19 @@ class LayoutManager:
 
         # Start after command column + separator
         start_x = column_width + separator_width
-        # Width is remaining space
-        sim_width = window_width - start_x
+
+        # Ensure the simulation area has at least 1 pixel width
+        # Width is remaining space (but at least 1 pixel to avoid errors)
+        sim_width = max(1, window_width - start_x)
+
+        # Make sure the simulation area doesn't extend beyond the window
+        if start_x + sim_width > window_width:
+            sim_width = window_width - start_x
+
+        # As a final safety check, ensure all values are valid
+        start_x = max(0, min(start_x, window_width - 1))
+        sim_width = max(1, min(sim_width, window_width - start_x))
+        window_height = max(1, window_height)
 
         return pygame.Rect(start_x, 0, sim_width, window_height)
 
@@ -66,11 +86,22 @@ class LayoutManager:
         Returns:
             pygame.Rect: Rectangle defining the area separator
         """
+        window_width, window_height = self.window_size
         column_width = self.command_area.width
-        window_height = self.window_size[1]
+
+        # Ensure we have valid dimensions
+        window_height = max(1, window_height)
+        separator_width = min(display.AREA_SEPARATOR, window_width - column_width)
+
+        # If there's no room for a separator, make it invisible
+        if separator_width <= 0:
+            separator_width = 0
+
+        # Don't let the separator extend beyond the window
+        x_pos = min(column_width, window_width - separator_width)
 
         # Separator sits between command area and simulation area
-        return pygame.Rect(column_width, 0, display.AREA_SEPARATOR, window_height)
+        return pygame.Rect(x_pos, 0, separator_width, window_height)
 
     def handle_resize(self, new_size: Tuple[int, int]) -> None:
         """Handle window resize event by recalculating all areas.
